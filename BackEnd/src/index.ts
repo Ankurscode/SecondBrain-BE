@@ -7,17 +7,23 @@ import { JWT_Password } from "./config.js";
 import { userMiddleware } from "./middleware.js";
 import { random } from "./utils.js";
 import { hash } from "zod";
+import cors  from "cors"
+
 
 const app=express();
-
+app.use(cors())
 
 const port=3000;
 
 
 
 
-app.use(express.json());
 
+app.use(express.json());
+enum ContentType{
+        Youtube="youtube",
+        Twitter="twitter"   
+    }
 
 app.post('/api/v1/signUp',async(req,res)=>{
     const validation=userValidation.parse(req.body);
@@ -71,10 +77,12 @@ app.post('/api/v1/signIn',async(req,res)=>{
 
 app.post('/api/v1/content',userMiddleware,async(req,res)=>{
    const types=req.body.type;
+   const title=req.body.title
    const link=req.body.link;
    await contentModel.create({
     link:link,
     type:types,
+    title:title,
     //@ts-ignore
     userId:req.userId,
     tags:[]
@@ -97,7 +105,7 @@ app.get('/api/v1/content',userMiddleware,async(req,res)=>{
 
 })
 
-app.delete('/api/v1/content',async(req,res)=>{
+app.delete('/api/v1/contentDelete',async(req,res)=>{
     const content=req.body.contentId;
     const userId=req.userId;
     await contentModel.deleteMany({
@@ -126,19 +134,22 @@ app.post('/api/v1/brain/share',userMiddleware,async(req,res)=>{
             userId:req.userId,
             hash:random(10)
         })
-        res.json(hash)
+        res.json("/share/"+hash)
     }else{
         await linkModel.deleteOne({
             userId:req.userId
         })
+          res.json({
+        
+        msg:"Remove link"
+    })
     }
 
-    res.json({
-        
-        msg:"updated share link"
-    })
+  
 
 })
+
+
 
 app.get('/api/v1/brain/:shareLink',async(req,res)=>{
     const hash=req.params.shareLink;

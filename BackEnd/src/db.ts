@@ -10,7 +10,7 @@ const userSchema=new Schema({
     password:{type:String,require:true}
 })
 
-export const userModel=mongoose.model("User",userSchema)  
+export const userMode1l=mongoose.model("User",userSchema)  
 
 const tagsSchema=new Schema({
     title:String
@@ -27,7 +27,7 @@ const contentSchema=new Schema({
     userId:{type:mongoose.Types.ObjectId,ref:"User",require:true}
 })
 
-export const contentModel=mongoose.model("Content",contentSchema)
+export const contentModel1=mongoose.model("Content",contentSchema)
 
 const LinkSchema=new Schema({
     hash:String,
