@@ -11,3 +11,16 @@ export const logInValidation=z.object({
     password:z.string().min(4)
 })
 
+export const forgotValidation=z.object({
+    userEmail:z.string().email(),
+})
+
+export const verifyOtpValidation=z.object({
+    useEmail:z.string().email("Invalid email address"),
+    otp:z.string().length(6)
+})
+
+export const resetPasswordValidation=z.object({
+    email:z.string().email(),
+    newPassword:z.string().min(4)
+})
