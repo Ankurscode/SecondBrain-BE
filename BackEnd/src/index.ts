@@ -8,6 +8,14 @@ import cookieParser from "cookie-parser"
 import { routes } from "./routes/PagesRoutes";
 import "./config/transporter"
 
+import "dotenv/config";
+
+console.log("ENV TEST:", {
+  SMTP_EMAIL: process.env.SMTP_EMAIL,
+  SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+});
+
+
 
 
 const app=express();

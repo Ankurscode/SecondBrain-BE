@@ -3,7 +3,7 @@ import { Request,Response } from "express";
 import { forgotValidation } from "../validation"
 import bcrypt from "bcrypt"
 import { optModel } from "../models/otpModel";
-import {transporter} from "../config/transporter"
+import {createTransport} from "../config/transporter"
 
 
 export const resetPassword=async(req:Request,res:Response)=>{
@@ -25,7 +25,12 @@ export const resetPassword=async(req:Request,res:Response)=>{
   await optModel.deleteMany({userEmail})
   console.log(process.env.SMTP_PASSWORD
 )
-
+  await optModel.create({
+      email: userEmail,
+      otp: otphash,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+  })
+  const transporter=createTransport()
   await transporter.sendMail({
     from:`"nepalBrain"<${process.env.SMTP_EMAIL}>`,
     to:userEmail,
