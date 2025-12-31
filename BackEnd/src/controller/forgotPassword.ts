@@ -6,7 +6,7 @@ import { optModel } from "../models/otpModel";
 import {createTransport} from "../config/transporter"
 
 
-export const resetPassword=async(req:Request,res:Response)=>{
+export const forgotPassword=async(req:Request,res:Response)=>{
   try{
      const parser=forgotValidation.safeParse(req.body)
   if(!parser.success){
@@ -17,19 +17,19 @@ export const resetPassword=async(req:Request,res:Response)=>{
   }
   const {userEmail}=parser.data
 
-  console.log(userEmail)
   const otp=generateOtp()
   const otphash=await bcrypt.hash(otp,10)
+ 
 
   //deleting the old opts from this email
   await optModel.deleteMany({userEmail})
-  console.log(process.env.SMTP_PASSWORD
-)
+  
   await optModel.create({
-      email: userEmail,
-      otp: otphash,
+      userEmail: userEmail,
+      otphash: otphash,
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
   })
+  
   const transporter=createTransport()
   await transporter.sendMail({
     from:`"nepalBrain"<${process.env.SMTP_EMAIL}>`,
@@ -46,6 +46,7 @@ export const resetPassword=async(req:Request,res:Response)=>{
 
   return res.status(200).json({
         msg: "If this email exists, an OTP has been sent",
+        
   })
 
   }catch(e){

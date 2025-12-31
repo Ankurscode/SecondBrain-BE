@@ -21,6 +21,7 @@ export const verifyOtpValidation=z.object({
 })
 
 export const resetPasswordValidation=z.object({
-    email:z.string().email(),
+    userEmail:z.string().email(),
+    userOtp:z.string(),
     newPassword:z.string().min(4)
 })

@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 
 const optSchema=new mongoose.Schema({
     userEmail:{type:String,require:true,index:true},
-    otphash:{type:String,require:true},
-    expiresAt:{type:Date,require:true},
-    attempts:{type:Number,default:0},
+    otphash:{type:String,required:true},
+    expiresAt:{type:Date,required:true},
+    attempts:{type:Number,default:0,max:5},
     used:{type:Boolean,default:false},
 
 },{timestamps:true})

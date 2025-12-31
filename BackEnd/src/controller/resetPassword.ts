@@ -8,15 +8,15 @@ import { userModel } from "../models/userModel";
 export const resetPassword=async(req:Request,res:Response)=>{
     try{
         const resetParse=resetPasswordValidation.safeParse(req.body);
-        console.log(resetParse);
-    if(!resetParse.success){
-        res.status(400).json({
-            msg:"Their is Error in parsing the data "
-        })
-        return
-    }
+        console.log("Body:",resetParse);
+        if(!resetParse.success){
+            res.status(400).json({
+                msg:"Their is Error in parsing the data "
+            })
+            return
+        }
 
-    const {userEmail,otp,newPassword}=resetParse.data
+    const {userEmail,userOtp,newPassword}=resetParse.data
     const recordOtp=await optModel.findOne({userEmail})
     console.log(recordOtp)
     if(!recordOtp){
@@ -36,7 +36,7 @@ export const resetPassword=async(req:Request,res:Response)=>{
         })
     }
 
-    const isOtpValid=await bcrypt.compare(otp,recordOtp.otphash)
+    const isOtpValid=await bcrypt.compare(userOtp,recordOtp.otphash)
     if(!isOtpValid){
         recordOtp.attempts+=1
         await recordOtp.save()
