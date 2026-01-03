@@ -18,7 +18,7 @@ export const resetPassword=async(req:Request,res:Response)=>{
 
     const {userEmail,userOtp,newPassword}=resetParse.data
     const recordOtp=await optModel.findOne({userEmail})
-    console.log(recordOtp)
+
     if(!recordOtp){
         res.status(400).json({
             msg:"The otp has been experied or not founder"

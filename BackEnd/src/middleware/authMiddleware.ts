@@ -36,7 +36,7 @@ export const isAuthenticated=(req:AuthRequest,res:Response,next:NextFunction)=>{
 
     try{
         const token=req.headers.authorization
-        console.log(token)
+        
         if(!process.env.SECRET_KEY){
             res.status(400).json({
                 msg:"Token key is not found"

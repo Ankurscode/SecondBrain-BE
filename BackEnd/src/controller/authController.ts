@@ -9,7 +9,7 @@ import dotenv from "dotenv"
 export const singUp=async(req:Request,res:Response)=>{
     try{
         const parse= userValidation.safeParse(req.body);
-        console.log(parse)
+        
 
         if(!parse.success){
             res.status(400).json({
@@ -60,7 +60,7 @@ export const singIn=async(req:Request,res:Response)=>{
             })
         }
         const {userEmail,password}=parsed.data
-        console.log(req.body)
+        
         
         const user1=await userModel.findOne({
             userEmail:userEmail
