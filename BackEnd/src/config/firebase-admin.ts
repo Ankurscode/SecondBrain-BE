@@ -1,6 +1,6 @@
 // src/config/firebase-admin.ts
 
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 import "dotenv/config"
 // ── Initialization logic ──
 const serviceAccountStr = process.env.FIREBASE_SERVICE_ACCOUNT;
