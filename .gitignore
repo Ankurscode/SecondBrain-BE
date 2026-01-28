@@ -1,3 +1,10 @@
+# node_modules/
+# .env
+# dist/
+# secondbrain-b5493-firebase-adminsdk-fbsvc-c42ac6b112.json/
+
+
 node_modules/
-.env
 dist/
+.env*
+*firebase-adminsdk*.json
