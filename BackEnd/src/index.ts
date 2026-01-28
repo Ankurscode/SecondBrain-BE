@@ -32,6 +32,9 @@ console.log("ENV CHECK:", {
 
 
 dbConnect()
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Backend is alive on Vercel!' });
+});
 
 app.use("/api/v1",routes)
 app.listen(process.env.PORT,()=>{
