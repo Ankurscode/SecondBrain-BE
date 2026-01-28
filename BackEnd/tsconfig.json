@@ -2,14 +2,14 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
-    "outDir": "./dist",                // or wherever you want compiled JS
-    "rootDir": "./src",                // adjust if your TS files are in src/
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*"],             // adjust to match your source folder
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
