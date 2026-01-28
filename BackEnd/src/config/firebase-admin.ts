@@ -1,27 +1,28 @@
+// src/config/firebase-admin.ts
+
 import * as admin from 'firebase-admin';
-import "dotenv/config";
+import "dotenv/config"
+// ── Initialization logic ──
+const serviceAccountStr = process.env.FIREBASE_SERVICE_ACCOUNT;
 
-const serviceAccountString = process.env.FIREBASE_SERVICE_ACCOUNT;
-
-if (!serviceAccountString) {
+if (!serviceAccountStr) {
   throw new Error('Missing FIREBASE_SERVICE_ACCOUNT env var');
 }
 
 let serviceAccount;
 try {
-  serviceAccount = JSON.parse(serviceAccountString);
+  serviceAccount = JSON.parse(serviceAccountStr);
 } catch (err) {
-  throw new Error('Invalid FIREBASE_SERVICE_ACCOUNT JSON format');
+  throw new Error(`Invalid Firebase service account JSON: ${err}`);
 }
 
-if (admin.apps.length === 0) {  // avoid re-initializing in serverless env
+if (admin.apps.length === 0) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    // databaseURL: 'https://your-project.firebaseio.com',  // add if using Realtime DB
-    // storageBucket: 'your-project.appspot.com',           // add if using Storage
+    // databaseURL: process.env.FIREBASE_DATABASE_URL,     // optional
+    // storageBucket: process.env.FIREBASE_STORAGE_BUCKET, // optional
   });
 }
 
-export const db = admin.firestore();  // or auth(), storage(), etc.
-export const auth = admin.auth();
-// ... export what you need
+// Export the initialized admin instance as default
+export default admin;
